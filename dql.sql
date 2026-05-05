@@ -146,14 +146,11 @@ GROUP BY f.id_film
 
 -- 23. Il numero di attori dei film in cui appaiono solo attori nati prima del 1970
 -- 23. Il numero di attori dei film in cui appaiono solo attori nati prima del 1970
-SELECT * FROM `gestione-film`.`film` AS f
-	JOIN `gestione-film`.`attore_film` AS att_f ON f.`id_film` = att_f.`id_film`
-    JOIN `gestione-film`.`attore` AS att ON att.`id_attore` = att_f.`id_attore`
-WHERE att.nome NOT IN (SELECT att.nome FROM `gestione-film`.`film` AS f
-		JOIN `gestione-film`.`attore_film` AS att_f ON f.`id_film` = att_f.`id_film`
-		JOIN `gestione-film`.`attore` AS att ON att.`id_attore` = att_f.`id_attore`
-	WHERE att.anno_nascita > 1970
-)
+SELECT f.titolo, count(*) as numeroattori FROM `gestione-film`.attore a
+	JOIN `gestione-film`.attore_film af ON a.id_attore = af.id_attore
+    JOIN `gestione-film`.film f ON af.id_film = f.id_film 
+GROUP BY f.titoli
+HAVING max(a.anno_nascita) < 1970
 ;
 -- TODO: doesn't work right now
 
@@ -205,3 +202,10 @@ WHERE f.titolo NOT IN (
 )
 
 -- 29. I titoli dei film che sono stati proiettati solo a Pisa
+SELECT titolo
+FROM film
+WHERE id_film not exist (
+	SELECT  id_film
+	FROM proieizione p, sala s
+	WHERE p.id_sala = s.id_sala and s.citta <> 'Pisa'
+)
