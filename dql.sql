@@ -177,6 +177,13 @@ GROUP BY f.id_film
 
 -- 27. Per ogni sala di Pisa, che nel mese di gennaio 2005 ha incassato più di 20000 €, il nome della
 -- sala e l’incasso totale (sempre del mese di gennaio 2005)
+SELECT sala.id_sala, sala.nome, SUM(pr.incasso) tot_incassi FROM `gestione-film`.`sala`
+	JOIN `gestione-film`.`proiezione` AS pr ON sala.id_sala = pr.id_sala
+WHERE YEAR(pr.data_proiezione) = 2005 AND MONTH(pr.data_proiezione) = 1
+	AND sala.citta = "Pisa"
+GROUP BY sala.id_sala, sala.nome
+HAVING SUM(pr.incasso) > 20000
+;
 
 -- 28. I titoli dei film che non sono mai stati proiettati a Pisa
 
