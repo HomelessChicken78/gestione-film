@@ -49,16 +49,16 @@ CREATE TABLE `gestione-film`.`proiezione` (
   `data_proiezione` DATE NOT NULL,
   PRIMARY KEY (`id_proiezione`));
 ALTER TABLE `gestione-film`.`proiezione` 
-ADD INDEX `fk_film_idx` (`id_film` ASC) VISIBLE,
-ADD INDEX `fk_sala_idx` (`id_sala` ASC) VISIBLE;
+ADD INDEX `fk_film_proiez_idx` (`id_film` ASC) VISIBLE,
+ADD INDEX `fk_sala_proiez_idx` (`id_sala` ASC) VISIBLE;
 ;
 ALTER TABLE `gestione-film`.`proiezione` 
-ADD CONSTRAINT `fk_film`
+ADD CONSTRAINT `fk_film_proiezione`
   FOREIGN KEY (`id_film`)
   REFERENCES `gestione-film`.`film` (`id_film`)
   ON DELETE NO ACTION
   ON UPDATE NO ACTION,
-ADD CONSTRAINT `fk_sala`
+ADD CONSTRAINT `fk_sala_proiezione`
   FOREIGN KEY (`id_sala`)
   REFERENCES `gestione-film`.`sala` (`id_sala`)
   ON DELETE NO ACTION
