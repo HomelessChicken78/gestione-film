@@ -121,3 +121,25 @@ WHERE sala.citta = "Pisa"
 	AND f.regista = "S. Spielberg"
 GROUP BY f.id_film
 ;
+
+-- 20. Per ogni regista e per ogni attore, il numero di film del regista con l’attore
+SELECT f.regista, att.nome AS attore, COUNT(f.id_film) FROM `gestione-film`.`film` AS f
+	JOIN `gestione-film`.`attore_film` AS att_f ON f.`id_film` = att_f.`id_film`
+    JOIN `gestione-film`.`attore` AS att ON att.`id_attore` = att_f.`id_attore`
+GROUP BY f.regista, att_f.id_attore
+;
+
+-- 21. Il regista ed il titolo dei film in cui recitano meno di 6 attori
+SELECT f.regista, f.titolo FROM `gestione-film`.`film` AS f
+	JOIN `gestione-film`.`attore_film` AS att_f ON f.`id_film` = att_f.`id_film`
+GROUP BY f.id_film
+HAVING COUNT(id_attore) < 6
+;
+
+-- 22. Per ogni film prodotto dopo il 2000, il codice, il titolo e l’incasso totale di tutte le sue
+-- proiezioni
+SELECT f.id_film, f.titolo, SUM(incasso) incasso_tot FROM `gestione-film`.`film` AS f
+	JOIN `gestione-film`.`proiezione` AS pr ON f.`id_film` = pr.`id_film`
+WHERE YEAR(pr.data_proiezione) > 2000
+GROUP BY f.id_film
+;
