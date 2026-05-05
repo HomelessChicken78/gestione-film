@@ -158,9 +158,19 @@ WHERE att.nome NOT IN (SELECT att.nome FROM `gestione-film`.`film` AS f
 -- TODO: doesn't work right now
 
 -- 24. Per ogni film di fantascienza, il titolo e l’incasso totale di tutte le sue proiezioni
+SELECT f.titolo, SUM(pr.incasso) tot_incassi FROM `gestione-film`.`film` AS f
+	JOIN `gestione-film`.`proiezione` AS pr ON f.id_film = pr.id_film
+WHERE genere = "Fantascienza"
+GROUP BY f.id_film
+;
 
 -- 25. Per ogni film di fantascienza il titolo e l’incasso totale di tutte le sue proiezioni successive al
 -- 1/1/01
+SELECT f.titolo, SUM(pr.incasso) tot_incassi FROM `gestione-film`.`film` AS f
+	JOIN `gestione-film`.`proiezione` AS pr ON f.id_film = pr.id_film
+WHERE genere = "Fantascienza" AND pr.data_proiezione > '2001-01-01'
+GROUP BY f.id_film
+;
 
 -- 26. Per ogni film di fantascienza che non è mai stato proiettato prima del 1/1/01 il titolo e
 -- l’incasso totale di tutte le sue proiezioni
