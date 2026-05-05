@@ -143,3 +143,7 @@ SELECT f.id_film, f.titolo, SUM(incasso) incasso_tot FROM `gestione-film`.`film`
 WHERE YEAR(pr.data_proiezione) > 2000
 GROUP BY f.id_film
 ;
+
+-- 23. Il numero di attori dei film in cui appaiono solo attori nati prima del 1970
+
+-- 24. Per ogni film di fantascienza, il titolo e l’incasso totale di tutte le sue proiezioni
