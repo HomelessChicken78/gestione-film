@@ -14,6 +14,8 @@ CREATE TABLE `gestione-film`.`film` (
   `regista` VARCHAR(45) NOT NULL,
   `durata` INT NOT NULL,
   PRIMARY KEY (`id_film`));
+ALTER TABLE `gestione-film`.`film` 
+ADD COLUMN `genere` VARCHAR(45) NOT NULL AFTER `regista`;
 
 CREATE TABLE `gestione-film`.`attore_film` (
   `id_attore` INT NOT NULL,
