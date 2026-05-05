@@ -145,5 +145,29 @@ GROUP BY f.id_film
 ;
 
 -- 23. Il numero di attori dei film in cui appaiono solo attori nati prima del 1970
+-- 23. Il numero di attori dei film in cui appaiono solo attori nati prima del 1970
+SELECT * FROM `gestione-film`.`film` AS f
+	JOIN `gestione-film`.`attore_film` AS att_f ON f.`id_film` = att_f.`id_film`
+    JOIN `gestione-film`.`attore` AS att ON att.`id_attore` = att_f.`id_attore`
+WHERE att.nome NOT IN (SELECT att.nome FROM `gestione-film`.`film` AS f
+		JOIN `gestione-film`.`attore_film` AS att_f ON f.`id_film` = att_f.`id_film`
+		JOIN `gestione-film`.`attore` AS att ON att.`id_attore` = att_f.`id_attore`
+	WHERE att.anno_nascita > 1970
+)
+;
+-- TODO: doesn't work right now
 
 -- 24. Per ogni film di fantascienza, il titolo e l’incasso totale di tutte le sue proiezioni
+
+-- 25. Per ogni film di fantascienza il titolo e l’incasso totale di tutte le sue proiezioni successive al
+-- 1/1/01
+
+-- 26. Per ogni film di fantascienza che non è mai stato proiettato prima del 1/1/01 il titolo e
+-- l’incasso totale di tutte le sue proiezioni
+
+-- 27. Per ogni sala di Pisa, che nel mese di gennaio 2005 ha incassato più di 20000 €, il nome della
+-- sala e l’incasso totale (sempre del mese di gennaio 2005)
+
+-- 28. I titoli dei film che non sono mai stati proiettati a Pisa
+
+-- 29. I titoli dei film che sono stati proiettati solo a Pisa
