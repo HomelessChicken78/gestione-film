@@ -174,6 +174,16 @@ GROUP BY f.id_film
 
 -- 26. Per ogni film di fantascienza che non è mai stato proiettato prima del 1/1/01 il titolo e
 -- l’incasso totale di tutte le sue proiezioni
+SELECT f.titolo, SUM(pr.incasso) AS tot_incassi FROM `gestione-film`.`film` AS f
+	JOIN `gestione-film`.`proiezione` AS pr ON f.id_film = pr.id_film
+WHERE f.genere = "Fantascienza" AND
+	f.titolo NOT IN (
+		SELECT DISTINCT f.titolo FROM `gestione-film`.`film` AS f
+			JOIN `gestione-film`.`proiezione` AS pr ON f.id_film = pr.id_film
+		WHERE pr.data_proiezione < '2001-01-01'
+	)
+GROUP BY f.id_film
+;
 
 -- 27. Per ogni sala di Pisa, che nel mese di gennaio 2005 ha incassato più di 20000 €, il nome della
 -- sala e l’incasso totale (sempre del mese di gennaio 2005)
@@ -186,5 +196,12 @@ HAVING SUM(pr.incasso) > 20000
 ;
 
 -- 28. I titoli dei film che non sono mai stati proiettati a Pisa
+SELECT f.titolo FROM `gestione-film`.`film` AS f
+WHERE f.titolo NOT IN (
+	SELECT DISTINCT f.titolo FROM `gestione-film`.`film` AS f
+		JOIN `gestione-film`.`proiezione` AS pr ON f.id_film = pr.id_film
+		JOIN `gestione-film`.`sala` ON sala.id_sala = pr.id_sala
+	WHERE sala.citta = "Pisa"
+)
 
 -- 29. I titoli dei film che sono stati proiettati solo a Pisa
