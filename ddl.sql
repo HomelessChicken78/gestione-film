@@ -43,10 +43,10 @@ CREATE TABLE `gestione-film`.`sala` (
 
 CREATE TABLE `gestione-film`.`proiezione` (
   `id_proiezione` INT NOT NULL,
-  `id_film` INT NOT NULL,
   `id_sala` INT NOT NULL,
+  `id_film` INT NOT NULL,
   `incasso` REAL NOT NULL,
-  `data_proiezione` INT NOT NULL,
+  `data_proiezione` DATE NOT NULL,
   PRIMARY KEY (`id_proiezione`));
 ALTER TABLE `gestione-film`.`proiezione` 
 ADD INDEX `fk_film_idx` (`id_film` ASC) VISIBLE,
